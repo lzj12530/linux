@@ -1,0 +1,3 @@
+#!/bin/sh
+test = $(ping www.baidu.com -c 4|grep 'recevied')
+echo $test
