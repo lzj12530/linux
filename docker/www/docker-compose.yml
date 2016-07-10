@@ -1,0 +1,26 @@
+version: '2'
+services:
+  php:
+    image: php-fpm:5.6-latest
+    environment:
+      - REDIS_HOST= 127.0.0.1
+      - DB_PASSWORD=d8c43bce61
+    volumes:
+      - "./html/:/var/www/html/"
+    restart: always
+    ports:
+      - "9000:9000"
+  www:
+    depends_on:
+      - php
+    image: nginx:latest
+    volumes:
+      - "./conf.d/:/etc/nginx/conf.d/"
+      - "./log/:/var/log/nginx/log/"
+    volumes_from:
+      - php
+    links:
+      - php
+    ports:
+      - "8000:80"
+    restart: always
